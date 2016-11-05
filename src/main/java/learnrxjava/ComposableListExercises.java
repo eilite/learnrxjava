@@ -121,17 +121,9 @@ public class ComposableListExercises<T> extends ArrayList<T> implements Composab
     public <R> ComposableList<R> map(Function<T, R> projectionFunction) {
         ComposableListExercises<R> results = new ComposableListExercises<R>();
         this.forEach(itemInList -> {
-            // ------------ INSERT CODE HERE! ----------------------------
-            // Apply the projectionFunction to each item in the list and add
-            // each result to the results list.
-            // Note that you can apply a projectionFunction to a value like this:
-            //  projectionFunction.apply(5)
-            // ------------ INSERT CODE HERE! ----------------------------
-            
+            results.add(projectionFunction.apply(itemInList));      
         });
-        
-        //return results;
-        throw new UnsupportedOperationException("Not implemented yet.");
+    	return results;
     }
     
     /*
@@ -147,9 +139,7 @@ public class ComposableListExercises<T> extends ArrayList<T> implements Composab
             new Video(65432445, "The Chamber", 4.0),
             new Video(675465, "Fracture", 5.0));
          
-        // complete this expression 
-        // return newReleases.map(video -> 
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return newReleases.map(video -> json("id", video.id, "title", video.title));
     }
 
     /*
@@ -187,13 +177,13 @@ public class ComposableListExercises<T> extends ArrayList<T> implements Composab
         ComposableListExercises<Video> highRatedVideos = new ComposableListExercises<Video>();
 
         newReleases.forEach(video -> {
-            // Insert code here that adds a video to the highRatedVideos list
-            // if it has a rating of 5.0.
+            if(video.rating==5.0){
+            	highRatedVideos.add(video);
+            }
 
         });
         
-        // return highRatedVideos;
-        throw new UnsupportedOperationException("Not implemented yet.");        
+        return highRatedVideos;
     }
     
     /*
@@ -215,17 +205,12 @@ public class ComposableListExercises<T> extends ArrayList<T> implements Composab
     public ComposableList<T> filter(Predicate<T> predicateFunction) {
         ComposableListExercises<T> results = new ComposableListExercises<T>();
         this.forEach(itemInList -> {
-            // ------------ INSERT CODE HERE! ----------------------------
-            // Apply the predicateFunction to each item in the list. If the
-            // result is true, add the result to the results list.
-            // Note: you can apply the predicateFunction to a value like this:
-            // predicateFunction.test(5)
-            // ------------ INSERT CODE HERE! ----------------------------
-
+        	if(predicateFunction.test(itemInList)){
+        		results.add(itemInList);
+        	}
         });
 
-        // return results;
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return results;
     }
 
     /*
@@ -264,9 +249,8 @@ public class ComposableListExercises<T> extends ArrayList<T> implements Composab
         // Chain the filter and map functions to select the id of all videos
         // with a rating of 5.0.
         // ------------ INSERT CODE HERE! -----------------------------------
-        //return newReleases // Complete this expression
+        return newReleases.filter(video -> video.rating == 5.0).map(video -> video.id);
 
-        throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     /*
@@ -299,20 +283,22 @@ public class ComposableListExercises<T> extends ArrayList<T> implements Composab
         // ------------   INSERT CODE HERE!  -----------------------------------
         // Use two nested forEach loops to flatten the movieLists into a list of
         // video ids.
+        movieLists.forEach(movieList -> movieList.videos.forEach(movie -> {
+        	allVideoIdsInMovieLists.add(movie.id);
+        }));
         // ------------   INSERT CODE HERE!  -----------------------------------
-        //return allVideoIdsInMovieLists;
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return allVideoIdsInMovieLists;
     }
     
     /*
     Exercise 10: Implement concatMap()
 
-    To flatten trees with nested forEach expressions we accumlate the results in a new flat list. Querying a List 
+    To flatten trees with nested forEach expressions we accumulate the results in a new flat list. Querying a List 
     of data from a Tree is a very common operation. Ideally we'd be able to use a helper function to do the heavy 
     lifting for us. 
 
     Let's implement the concatMap() method for List. Like map(), the concatMap() function applies a projection 
-    function to each item in a list. However the projection function passed to concatMap tranforms each individual 
+    function to each item in a list. However the projection function passed to concatMap transforms each individual 
     value into a _list of values_, creating a tree structure. Before returning the tree, the concatMap method 
     flattens the tree by concatenating each inner list together in order. Here's an example of concatMap in action:
 
@@ -336,7 +322,6 @@ public class ComposableListExercises<T> extends ArrayList<T> implements Composab
             // This will create _another_ list. Then loop through each
             // inner list and add each item to the results list.
             // Note that you can apply a projectionFunction to a value like this:
-            // projectionFunctionThatReturnsList.apply(5)
             // ------------ INSERT CODE HERE! ----------------------------
 
         }
