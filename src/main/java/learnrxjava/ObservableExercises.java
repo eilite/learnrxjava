@@ -12,7 +12,7 @@ public class ObservableExercises {
      * @return "Hello World!"
      */
     public Observable<String> exerciseHello() {
-        return Observable.error(new RuntimeException("Not Implemented"));
+        return Observable.just("Hello World!");
     }
 
     /**
@@ -21,7 +21,7 @@ public class ObservableExercises {
      * @param "Hello Name!"
      */
     public Observable<String> exerciseMap(Observable<String> hello) {
-        return Observable.error(new RuntimeException("Not Implemented"));
+        return hello.map(string -> string + " Name");
     }
 
     /**
@@ -32,7 +32,7 @@ public class ObservableExercises {
      * 6-Even
      */
     public Observable<String> exerciseFilterMap(Observable<Integer> nums) {
-        return Observable.error(new RuntimeException("Not Implemented"));
+        return nums.filter(num -> num % 2 == 0).map(num -> num + "-Even");
     }
 
     /**
@@ -42,7 +42,7 @@ public class ObservableExercises {
      * @return Observable of Integers of Movies.videos.id
      */
     public Observable<Integer> exerciseConcatMap(Observable<Movies> movies) {
-        return Observable.error(new RuntimeException("Not Implemented"));
+    	return movies.concatMap(movie -> movie.videos.map(v -> v.id));
     }
 
     /**
@@ -59,7 +59,7 @@ public class ObservableExercises {
      * @return Observable of Integers of Movies.videos.id
      */
     public Observable<Integer> exerciseFlatMap(Observable<Movies> movies) {
-        return Observable.error(new RuntimeException("Not Implemented"));
+    	return movies.flatMap(movie -> movie.videos.map(video -> video.id));
     }
 
     /**
@@ -68,7 +68,10 @@ public class ObservableExercises {
      * Use reduce to select the maximum value in a list of numbers.
      */
     public Observable<Integer> exerciseReduce(Observable<Integer> nums) {
-        return Observable.error(new RuntimeException("Not Implemented"));
+        return nums.reduce((i, i1) -> {
+        	if(i>i1) return i;
+        	else return i1;
+        });
     }
 
     /**
